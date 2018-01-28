@@ -95,7 +95,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/Polaris-SDU/test-result/master/fl1.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Polaris-SDU/test-result/master/tank.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Polaris-SDU/test-result/master/GL32.png">
-<meta property="og:updated_time" content="2018-01-28T00:50:49.179Z">
+<meta property="og:updated_time" content="2018-01-28T01:02:46.977Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Logistic Rehression">
 <meta name="twitter:description" content="简介我们知道其实 “深度学习” 是深层神经网络的重新包装，得益于GPU和大规模数据集的出现以及近几年算法的创新，神经网络重新焕发了生机。logistic regression 分类器可以看成一个单层的神经网络，若干个logistic regression单元有规律的组合就能形成可以处理复杂任务的深层神经网络，因此探讨logistic regression 的运行机制对于我们理解深层神经网络有很大的">
@@ -314,7 +314,7 @@
 <p><img src="https://raw.githubusercontent.com/Polaris-SDU/test-result/master/neuron.png" alt="M-P神经元模型"></p>
 <h1 id="Logistic-Regression-原理"><a href="#Logistic-Regression-原理" class="headerlink" title="Logistic Regression 原理"></a>Logistic Regression 原理</h1><p>目前神经网络的运行主要分为2个方向:遍历样本进行前向传播产生预测值;计算成本进行反向传播更新参数值。下面我们将分别介绍它们的工作原理。</p>
 <h2 id="前向传播"><a href="#前向传播" class="headerlink" title="前向传播"></a>前向传播</h2><p>为了方便我们以后讨论问题，我们先定义如下符号：<br>x:表示一个$n<em>{x}$维的输入数据,其维度为($n</em>{x}$,1).<br>y:表示输出结果,取值为0或1.<br>$\left( x^{\left( i\right) },y^{\left( i\right) }\right)$:表示第i组数据，可能是训练数据也可能是测试数据.<br>$X=[x^{\left( 1\right) },x^{\left( 2\right) },\ldots \ldots .,x^{\left( m\right) }]$:表示数据集的输入值，放在一个$n<em>{x}$xm的矩阵中，其中m表示样本数目.<br>$Y=[y^{\left( 1\right) },y^{\left( 2\right) },\ldots \ldots .,y^{\left( m\right) }]$:表示数据集的输出值，维度为1xm.<br>用一对(x,y)来表示一个单独的样本，其中x代表$n</em>{x}$维的特征向量，y表示标签(输出结果)只能为0或1,其中($x^{\left( 1\right) }$,$y^{\left( 1\right) }$)表示第一个样本的输入和输出,($x^{\left( 2\right) }$,$y^{\left( 2\right) }$)表示第二个样本的输入和输出,($x^{\left( m\right) }$,$y^{\left( m\right) }$)表示第m个样本的输入和输出。</p>
-<script type="math/tex; mode=display">Z=W^{T}X+b$$  $$\widehat {Y}=g(Z)</script><p>前向传播主要分为线性运算和激活运算,g指的激活函数。我们常用的激活函数有:sigmoid,tanh,softmax,relu等等。在深层神经网络中我们一般采用relu+softmax或relu+tanh,关于它们的优缺点和应用场景可以参考:<a href="https://www.jianshu.com/p/22d9720dbf1a" target="_blank" rel="noopener">常用激活函数比较</a> 在本例中我们采用sigmoid作为激活函数。</p>
+<script type="math/tex; mode=display">Z=W^{T}X+b</script><script type="math/tex; mode=display">\widehat {Y}=g(Z)</script><p>前向传播主要分为线性运算和激活运算,g指的激活函数。我们常用的激活函数有:sigmoid,tanh,softmax,relu等等。在深层神经网络中我们一般采用relu+softmax或relu+tanh,关于它们的优缺点和应用场景可以参考:<a href="https://www.jianshu.com/p/22d9720dbf1a" target="_blank" rel="noopener">常用激活函数比较</a> 在本例中我们采用sigmoid作为激活函数。</p>
 <h2 id="成本函数-cost-function"><a href="#成本函数-cost-function" class="headerlink" title="成本函数(cost function)"></a>成本函数(cost function)</h2><script type="math/tex; mode=display">L\left( \widehat {y},y\right)=-(y\log \left( \widehat {y}\right)+\left( 1-y\right) \log \left( 1-\widehat {y}\right))</script><script type="math/tex; mode=display">J(w,b)=\dfrac {1}{m}\sum ^{i=m}_{i=1}L(\widehat {y}^{\left( i\right) },{y}^{\left( i\right) })=-\dfrac {1}{m}\sum ^{i=m}_{i=1}(y\log \left( \widehat {y}\right)+\left( 1-y\right) \log \left( 1-\widehat {y}\right))</script><p>在对网络进行反向传播之前,我们首先需要多前向传播计算的输出值和样本的真实值(标签值)之间的误差计算损失。loss function(L) 是在单个训练样本上定义的，它衡量了神经网络在单个训练样本上的表现;cost function(J) 是在全体样本上定义的，它衡量的是神经网络在全体训练样本上的表现。</p>
 <h2 id="反向传播"><a href="#反向传播" class="headerlink" title="反向传播"></a>反向传播</h2><script type="math/tex; mode=display">dZ=A-Y</script><script type="math/tex; mode=display">dw=\dfrac {1}{m}*X*dZ^{T}</script><script type="math/tex; mode=display">db=\dfrac {1}{m}*np.sum(dZ)</script><script type="math/tex; mode=display">w=w-\alpha*dw</script><script type="math/tex; mode=display">b=b-\alpha*db</script><p>反向传播是神经网络进行训练和优化的重要环节，在训练集上利用优化算法最小化成本函数J(w,b)来得出最优的参数w,b。常见的优化算法有GD,SGD,RMSprop,ADAM,Adadelta等等。<a href="https://www.aiboy.pub/2017/09/10/A_Brief_Of_Optimization_Algorithms/" target="_blank" rel="noopener">优化算法的比较及代码实现</a>,接着我们就可以进行n次梯度循环，一步步达到最优值。下面我们将以吴恩达教授的猫脸识别为例详解 Logistic Regression 的代码实现。</p>
 <h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><h2 id="sigmoid激活函数"><a href="#sigmoid激活函数" class="headerlink" title="sigmoid激活函数"></a>sigmoid激活函数</h2><p>sigmoid用于神经网络的输出层，它可以将一个实数映射到(0，1)的区间，可以用来做二分类。<br><img src="https://raw.githubusercontent.com/Polaris-SDU/test-result/master/sigmoid.png" alt="sigmoid"></p>
@@ -403,13 +403,13 @@ def prediction(w,b,X):
     print(&quot;训练集识别准确度：{}%&quot;.format(train_accuracy))
     print(&quot;测试集识别准确度：{}%&quot;.format(test_accuracy))
     test_parameters={&quot;w&quot;:w,
-                    &quot;b&quot;:b}
+                     &quot;b&quot;:b}
     return costs,test_parameters
-</code></pre><h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>我们可以随意设置学习率和梯度下降循环次数，观察神经网络的运行结果，为了方便查看可以使用matplotlib 库绘制cost 曲线。我设置了3个不同的学习率分别为0.018,0.012,0.006，循环次数为2000次，最后用三张照片测试算法的性能。</p>
+</code></pre><h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>我们可以随意设置学习率和梯度下降循环次数，观察神经网络的运行结果，为了方便查看可以使用matplotlib 库绘制cost 曲线。我设置了3个不同的学习率分别为0.018,0.012,0.006，循环次数为2000次，最后用四张照片测试算法的性能。</p>
 <h2 id="代码实现-4"><a href="#代码实现-4" class="headerlink" title="代码实现"></a>代码实现</h2><pre><code>learning_rate=[0.018,0.012,0.006]
 for i in range(3):
-    costs,test_parameters=logistic_regression(train_set_x,train_set_y_orig,test_set_x,test_set_y_orig,
-                                          number_gradient=2000,learning_rate=learning_rate[i])
+    costs,test_parameters=logistic_regression(train_set_x,train_set_y_orig,test_set_x,
+    test_set_y_orig,number_gradient=2000,learning_rate=learning_rate[i])
     #绘制代价函数曲线
     plt.plot(costs)
     plt.ylabel(&quot;cost&quot;)
@@ -422,10 +422,11 @@ for i in range(3):
         fname = &quot;images/&quot; + my_image  #其中“images”是存储图像的文件夹
         image = ndimage.imread(fname, flatten=False)  #读取图片
         my_image = scipy.misc.imresize(image, size=(64,64)).reshape((1, 64*64*3)).T #放缩图像
-        my_predicted_image = prediction(test_parameters[&quot;w&quot;], test_parameters[&quot;b&quot;], my_image)  #预测
+        my_predicted_image = prediction(test_parameters[&quot;w&quot;],test_parameters[&quot;b&quot;],my_image)#预测
         plt.imshow(image)
-        print(&quot;y = &quot; + str(np.squeeze(my_predicted_image)) + &quot;, your algorithm predicts it is a \&quot;&quot; +
-        classes[int(np.squeeze(my_predicted_image))].decode(&quot;utf-8&quot;) +  &quot;\&quot;picture.&quot;)    # \&quot;是python中双引号的转义字符  
+        print(&quot;y = &quot; + str(np.squeeze(my_predicted_image)) + &quot;, your algorithm predicts 
+        it is a \&quot;&quot; +classes[int(np.squeeze(my_predicted_image))].decode(&quot;utf-8&quot;) +&quot;\&quot;picture.&quot;)
+        # \&quot;是python中双引号的转义字符  
 </code></pre><h1 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h1><p><img src="https://raw.githubusercontent.com/Polaris-SDU/test-result/master/costquxian.png" alt="cost曲线"></p>
 <p><img src="https://raw.githubusercontent.com/Polaris-SDU/test-result/master/daijiazhexian.png" alt="cost折线图"></p>
 <p><img src="https://raw.githubusercontent.com/Polaris-SDU/test-result/master/ML1.png" alt="测试图1"></p>
@@ -742,7 +743,24 @@ src="//music.163.com/outchain/player?type=2&id=4164331&auto=0&height=66"></ifram
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 
 
 
@@ -795,45 +813,6 @@ src="//music.163.com/outchain/player?type=2&id=4164331&auto=0&height=66"></ifram
   
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
-  
-
 
   
 
